@@ -1,0 +1,333 @@
+// Other SCSS import
+@import 'reset';
+@import 'mixin';
+
+// Color Configuration
+$green: #39a128;
+$light-grey: #f0f0f0;
+$grey: #999;
+
+// Font Configuration
+$roboto: 'Roboto', serif;
+
+// Basic stylization
+body {
+    font-family: $roboto;
+    font-size: 14px;
+    line-height: 1;
+}
+
+// Layout
+$grid-columns: 12;
+$grid-max-width: 1390px;
+
+.container {
+    max-width: $grid-max-width;
+    margin: 0 auto;
+    .row {
+        margin: 0 10px;
+    }
+}
+
+// Header
+header {
+    .logo {
+        margin-top: 20px;
+        text-align: center;
+        @media all and (min-width: 768px){
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+    }
+    .mobile-toggle {
+        text-align: right;
+        i {
+            color: $green;
+            font-size: 30px;
+        }
+        @media all and (min-width: 768px){
+            display: none;
+        }
+    }
+    .menu {
+        display: none;
+        @media all and (min-width: 768px){
+            display: block;
+        }
+        .nav.navbar-nav {
+            @include flexbox();
+            @include flex-direction(column);
+            @include flex-wrap(wrap);
+            justify-content: space-around;
+            @media all and (min-width: 768px){
+                @include flex-direction(row);
+            }
+            .menu-item {
+                text-align: center;
+                color: $green;
+                border-bottom: 1px dotted #d5d5d5;
+                @media all and (min-width: 768px){
+                    border-bottom: 0px;
+                }
+                &.search {
+                    display: none;
+                    @media all and (min-width: 768px){
+                        display: block;
+                    }
+                }
+                a {
+                    display: block;
+                    color: inherit;
+                    text-decoration: none;
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}
+
+#wrapper {
+    .slider {
+        margin: 10px auto;
+        position: relative;
+        .bx-wrapper {
+            .bx-viewport {
+                border: 0px;
+                box-shadow: none;
+                left: 0px;
+            }
+            .bx-controls {
+                .bx-prev {
+                    background: url(../images/arrow-prev.png) no-repeat;
+                    background-size: cover;
+                    @media all and (min-width: 768px){
+                        width: 67px;
+                        height: 67px;
+                    }
+                }
+                .bx-next {
+                    @extend .bx-prev;
+                    background: url(../images/arrow-next.png) no-repeat;
+                    background-size: cover;
+                }
+            }
+        }
+        .slides {
+            .slide {
+            }
+        }
+        .controls {
+            position: absolute;
+            .prev {
+                display: block;
+                width: 10%;
+            }
+            .next {
+                display: block;
+                width: 10%;
+            }
+        }
+    }
+    .product-container {
+        @include flexbox();
+        @include flex-wrap(wrap);
+        justify-content: space-between;
+        @for $i from 1 through $grid-columns {
+        	.flex-#{$i} {
+        		// max-width: $grid-max-width / $grid-columns * $i;
+                @include flex($i 100%);
+                @media all and (min-width: 768px){
+                    @include flex($i);
+                }
+        	}
+        }
+        .flex-2 {
+            @media all and (min-width: 768px){
+                @include flex(2 100%);
+            }
+            @media all and (min-width: 992px){
+                @include flex(2);
+            }
+        }
+        [class^=flex] {
+            margin-bottom: 10px;
+
+            @include flexbox();
+            @include flex-direction(column);
+            justify-content: space-between;
+            text-align: center;
+            @media all and (min-width: 768px){
+                &:nth-child(2) {
+                    margin-right: 5px;
+                }
+                &:nth-child(3) {
+                    margin-left: 5px;
+                }
+            }
+            @media all and (min-width: 992px){
+                margin: 0 5px 10px;
+                &:first-of-type {
+                    margin-left: 0px;
+                }
+                &:last-of-type {
+                    margin-right: 0px;
+                }
+            }
+            &.product {
+                background-color: $light-grey;
+                text-align: center;
+                .product-name {
+                    color: $grey;
+                    font-size: 35px;
+                    margin-top: 25px;
+                    margin-bottom: 15px;
+                }
+                .product-image {
+                    max-width: 70%;
+                }
+                .product-cta {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    .buy {
+                        display: inline-block;
+                        border: 0px;
+                        padding: 15px 30px;
+                        margin: 5px;
+                        @include border-radius(2px);
+                        text-decoration: none;
+                        background-color: $grey;
+                        color: white;
+                    }
+                    .more {
+                        @extend .buy;
+                        background-color: white;
+                        color: $grey;
+                    }
+                }
+            }
+            &.ambient-image {
+                height: 466px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+    }
+    .closure {
+        @extend .product-container;
+        [class^=flex] {
+            justify-content: center;
+            @media all and (min-width: 768px){
+                &:first-of-type {
+                    margin-right: 10px;
+                }
+                &:last-of-type {
+                    margin-right: 0px;
+                }
+            }
+            @media all and (min-width: 992px){
+                &:last-of-type {
+                    padding-right: 10px;
+                    margin-left: 0px;
+                }
+            }
+            &.ambient-image {
+                &.align-left {
+                    justify-content: flex-end;
+                    text-align: left;
+                    p, .product-cta {
+                        padding-left: 40px;
+                    }
+                }
+                .title {
+                    color: white;
+                    font-size: 80px;
+                }
+                .subtitle {
+                    @extend .title;
+                    font-size: 36px;
+                }
+                .product-cta {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    .more {
+                        display: inline-block;
+                        border: 0px;
+                        padding: 15px 30px;
+                        margin: 5px;
+                        @include border-radius(2px);
+                        text-decoration: none;
+                        background-color: white;
+                        color: $grey;
+                    }
+                }
+            }
+        }
+    }
+}
+
+footer {
+    .quote {
+        position: relative;
+        img {
+            position: absolute;
+            top: 50%;
+            margin-top: -31px;
+        }
+        p {
+            background-color: $light-grey;
+            margin-left: 23px;
+            padding: 20px 40px;
+            font-size: 16px;
+            line-height: 1.375;
+            color: $grey;
+        }
+    }
+    .closure {
+        margin: 10px 0;
+        background-color: #797979;
+        padding: 20px;
+        @include flexbox();
+        @include flex-direction(column);
+        align-items: center;
+        @media all and (min-width: 992px){
+            @include flex-direction(row);
+        }
+        .logo {
+            margin-bottom: 10px;
+            @media all and (min-width: 992px){
+                margin-bottom: 0px;
+            }
+        }
+        div {
+            @media all and (min-width: 992px){
+                flex: 1;
+                margin-left: 20px;
+                padding-left: 20px;
+                border-left: 1px solid #b3b3b3;
+                &:first-of-type {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        p {
+            margin-bottom: 5px;
+            font-size: 12px;
+            line-height: 1.66666;
+            color: white;
+            @media all and (min-width: 992px){
+                margin-bottom: 0px;
+                &:first-of-type {
+                    margin-bottom: 5px;
+                }
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+        .design {
+            align-self: flex-end;
+        }
+    }
+}
